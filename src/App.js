@@ -1,16 +1,43 @@
-import React, { useState } from "react";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import React, { Component } from "react";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
 
-const App = () => {
-  const [value, onChange] = useState(new Date());
+import "./App.css";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
-  return (
-    <div>
-      <Calendar onChange={onChange} value={value} />
-      <div>{value.toLocaleDateString()}</div> 
-    </div>
-  );
-};
+const localizer = momentLocalizer(moment);
+
+class App extends Component {
+  state = {
+    events: [
+      {
+        start: moment().toDate(),
+        end: moment().add(1, "days").toDate(),
+        title: "Some title",
+      },
+      {
+        start: moment().toDate(),
+        end: moment().add(1, "days").toDate(),
+        title: "Some title",
+      },
+    ],
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <Calendar
+          localizer={localizer}
+          defaultDate={new Date()}
+          defaultView="month"
+          events={this.state.events}
+          style={{ height: "100vh" }}
+          // style={{height:"40vh",width:"350px"}}
+          // style={{height:"300px",width:"350px"}}
+        />
+      </div>
+    );
+  }
+}
 
 export default App;
